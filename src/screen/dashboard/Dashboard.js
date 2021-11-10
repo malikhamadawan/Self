@@ -24,7 +24,7 @@ export class Dashboard extends React.Component {
       <View
         style={{
           flex: 1,
-          //backgroundColor: '#faf',
+          backgroundColor: '#000',
         }}>
         <View
           style={{
@@ -73,22 +73,58 @@ export class Dashboard extends React.Component {
             justifyContent: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate('Basicstwo');
-              //console.warn (this);
-            }}
-            style={{
-              height: '90%',
-              width: '90%',
-              borderColor: 'red',
-              borderWidth: 1,
-              borderRadius: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'black',
-            }}>
-            <Text>list</Text>
+           onPress={() => {
+            this.props.navigation.navigate('BasicsTwo');
+            //console.warn (this);
+          }}
+          style={{
+            height: '90%',
+            width: '90%',
+            borderColor: 'red',
+            borderWidth: 1,
+            borderRadius: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text
+          style={{
+            color: '#fff',
+          }}>list</Text>
           </TouchableOpacity>
+           
+        </View>
+        <View
+        style={{
+            height: '15%',
+            //backgroundColor: '#f64',
+            alignItems:'center',
+            justifyContent: 'center',
+        }}>
+         <TouchableOpacity
+         onPress ={() => {
+             const navProps ={
+                 name: this.state.name,
+                 email: this.state.email,
+                 password: this.state.password,
+             };
+             this.props.navigation.navigate ('EditProfile',navProps);
+             //console.warn (this);
+         }}
+         style={{
+             height: '90%',
+             width: '90%',
+             borderColor: 'red',
+             borderWidth:1,
+             borderRadius: 10,
+             alignItems: 'center',
+             justifyContent: 'center',
+         }}>
+             <Text
+             style={{
+                 color: '#ffff',
+             }}
+             >EditProfile</Text>
+         </TouchableOpacity>
         </View>
       </View>
     );
