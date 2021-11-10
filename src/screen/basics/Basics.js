@@ -47,7 +47,7 @@ export class Basics extends React.Component {
           </View>
           <Text
             style={{
-              fontsize: 26,
+              fontSize: 26,
               color: 'white',
               fontStyle: 'italic',
               fontWeight: 'bold',
