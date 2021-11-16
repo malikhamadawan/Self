@@ -3,30 +3,25 @@
 import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {AppBtn} from '../../components/AppBtn';
+import {NavHeader} from '../../components/NavHeader';
 
-export class EditProfile extends React.Component {
+export class EditProfile extends React.Component{
   state = {
     name: '',
-    email: '',
     password: '',
     user: {},
   };
 
   componentDidMount = () => {
     const navProps = this.props.route.params;
-    console.warn(navProps);
-    if (navProps !== undefined) {
-      this.setState({
-        user: navProps,
-        name: navProps.name,
-        email: navProps.email,
-        password: navProps.password,
-      });
-      console.warn('Gift ha');
-    } else {
-      console.warn('No Roti pani');
-    }
+    this.setState({
+      user: navProps,
+      name: navProps.name,
+      password: navProps.password,
+    });
   };
+
   render() {
     return (
       <KeyboardAwareScrollView
@@ -35,105 +30,79 @@ export class EditProfile extends React.Component {
         }}>
         <View
           style={{
-            backgroundColor: 'white',
             flex: 1,
+             backgroundColor: '#aaf',
           }}>
-          <View
-            style={{
-              height: '15%',
-              //backgroundColor: '#afa',
+          <NavHeader
+            leftIc={'ios-arrow-back'}
+            rightIc={'ios-arrow-forward'}
+            title={'Edit Profile'}
+            leftPressed={() => {
+              this.props.navigation.goBack();
             }}
           />
+
+          {/* spacer */}
           <View
             style={{
-              //backgroundColor: 'blue',
-              paddingLeft: 15,
-            }}>
-            <Text
-              style={{
-                fontSize: 25,
-                fontWeight: 'bold',
-                color: '#000',
-              }}>
-              EditProfile
-            </Text>
-          </View>
-          <View
-            style={{
-              //background: '#aaf',
-              height: '10%',
+              height: '5%',
+              //   backgroundColor: '#faf',
             }}
           />
+
+          {/* bottom view */}
           <View
             style={{
-              //backgroundColor: '#444',
-              height: 362,
+              // backgroundColor: '#1af',
+              height: 350,
               padding: 15,
             }}>
             <TextInput
               onChangeText={txt => this.setState({name: txt})}
               style={{
-                //backgroundColor: '#adf',
+                // backgroundColor: '#aaf',
                 borderColor: 'red',
                 borderBottomWidth: 0.5,
-                color: '#000',
               }}
               placeholder={'Name'}
-              placeholderTextColor={'black'}
               value={this.state.name}
+              placeholderTextColor={'black'}
             />
+
             <TextInput
               onChangeText={txt => this.setState({email: txt})}
               style={{
-                //backgroundColor: '#afd',
+                // backgroundColor: '#aaf',
                 borderColor: 'red',
                 borderBottomWidth: 0.5,
                 marginTop: 10,
-                color: '#000',
               }}
               placeholder={'Email'}
+              value={this.state.user.email}
+              editable={false}
               placeholderTextColor={'black'}
-              value={this.state.email}
             />
+
             <TextInput
               onChangeText={txt => this.setState({password: txt})}
               style={{
-                //backgroundColor: '#afd',
+                // backgroundColor: '#aaf',
                 borderColor: 'red',
                 borderBottomWidth: 0.5,
                 marginTop: 10,
-                color: '#000',
               }}
               placeholder={'Password'}
-              secureTextEntry={true}
-              placeholderTextColor={'black'}
               value={this.state.password}
+              placeholderTextColor={'black'}
             />
-            <View
-              style={{
-                //backgroundColor: '#aaf',
-                marginTop: 40,
-                width: '100%',
-                alignItems: 'center',
-              }}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.replace('Dashboard')}
-                style={{
-                  backgroundColor: '#000',
-                  height: 50,
-                  width: '70%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 7,
-                }}>
-                <Text
-                  style={{
-                    color: '#fff',
-                  }}>
-                  Update
-                </Text>
-              </TouchableOpacity>
-            </View>
+
+            <AppBtn
+              txt={'Update'}
+              onPress={() => this.props.navigation.replace('Dashboard')}
+              st={{
+                marginTop: 20,
+              }}
+            />
           </View>
         </View>
       </KeyboardAwareScrollView>

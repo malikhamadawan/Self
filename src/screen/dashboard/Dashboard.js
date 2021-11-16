@@ -4,6 +4,7 @@ import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { NavHeader } from '../../components/NavHeader';
 export class Dashboard extends React.Component {
   state = {
     name: '',
@@ -13,12 +14,19 @@ export class Dashboard extends React.Component {
   };
   componentDidMount = () => {
     const navProps = this.props.route.params;
-    this.setState({
-      name: navProps.name,
-      email: navProps.email,
-      password: navProps.password,
-    });
-  };
+    console.warn(navProps);
+    if (navProps !== undefined) {
+      this.setState({
+        user: navProps,
+        name: navProps.name,
+        email: navProps.email,
+        password: navProps.password,
+      });
+      //console.warn('Gift ha');
+    } else {
+      //console.warn('No Roti pani');
+    }
+  }
   render() {
     return (
       <View
@@ -26,45 +34,17 @@ export class Dashboard extends React.Component {
           flex: 1,
           backgroundColor: '#000',
         }}>
-        <View
-          style={{
-            height: 50,
-            //backgroundColor: '#aaf',
-            flexDirection: 'row',
-            borderBottomWidth: 0.5,
-            borderColor: 'red',
-          }}>
-          <TouchableOpacity
-            style={{
-              height: '100%',
-              width: '15%',
-              //backgroundColor : '#faf',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Ionicons name={'ios-list'} size={25} color={'red'} />
-          </TouchableOpacity>
-          <View
-            style={{
-              height: '100%',
-              width: '70%',
-              //backgroundColor: '#af2',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text>{this.state.user.name}</Text>
-          </View>
-          <TouchableOpacity
-            style={{
-              height: '100%',
-              width: '15%',
-              //backgroundColor: '#ffa',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <MaterialIcons name={'support-agent'} size={25} color={'red'} />
-          </TouchableOpacity>
-        </View>
+          <NavHeader
+          leftIc={'ios-list'}
+          title={'Dashboard'}
+          rightIc={'ios-arrow-forward'}
+          leftPressed={()=>{
+            console.warn('left')
+          }}
+          rightPressed={()=>{
+            console.warn('right')
+          }}
+          />
         <View
           style={{
             height: '15%',
