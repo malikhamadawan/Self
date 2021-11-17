@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, ImageBackground} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { NavHeader } from '../../components/NavHeader';
@@ -29,6 +29,13 @@ export class Dashboard extends React.Component {
   }
   render() {
     return (
+      <ImageBackground
+      source={require('../../assets/bg.jpg')}
+      style={{
+        flex: 1,
+        //backgroundColor: '#aa2',
+      }}
+      >
       <View
         style={{
           flex: 1,
@@ -107,6 +114,7 @@ export class Dashboard extends React.Component {
          </TouchableOpacity>
         </View>
       </View>
+      </ImageBackground>
     );
   }
 }
