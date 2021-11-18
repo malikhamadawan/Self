@@ -16,14 +16,14 @@ export const ScreenNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
+      <Stack.Screen
+          name="List"
+          component={List}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="List"
-          component={List}
+          name="SignUp"
+          component={SignUp}
           options={{headerShown: false}}
         />
 

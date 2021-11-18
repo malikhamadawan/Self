@@ -1,3 +1,5 @@
+/* eslint-disable eslint-comments/no-unused-disable */
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
