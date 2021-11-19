@@ -34,12 +34,7 @@ export class NavHeader extends React.Component {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Text
-            style={{
-              color: '#000',
-            }}>
-            {this.props.title}
-          </Text>
+          <Text>{this.props.title}</Text>
         </View>
         <TouchableOpacity
           onPress={this.props.rightPressed}

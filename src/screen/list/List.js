@@ -7,6 +7,7 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
+import { back } from 'react-native/Libraries/Animated/Easing';
 
 export class List extends React.Component {
   state = {
@@ -87,7 +88,10 @@ export class List extends React.Component {
     }
   };*/
   renderDesign = item => (
-    <View
+    <TouchableOpacity
+      onPress={() => {
+        this.props.navigation.navigate('DetailsScreen', item);
+      }}
       style={{
         height: h('11%'),
         //backgroundColor: '#a23',
@@ -197,7 +201,7 @@ export class List extends React.Component {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
   separator = () => (
     <View
@@ -216,6 +220,7 @@ export class List extends React.Component {
         <NavHeader
           title={'List'}
           rightIc={'ios-arrow-forward'}
+          leftIc={'ios-arrow-back'}
           rightPressed={() => {
             this.setState({loggedIn: !this.state.loggedIn});
           }}

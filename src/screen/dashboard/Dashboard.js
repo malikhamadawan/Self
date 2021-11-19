@@ -114,7 +114,7 @@ export class Dashboard extends React.Component {
               }}>
               <Text
                 style={{
-                  color: '#ffff',
+                  color: '#fff',
                 }}>
                 EditProfile
               </Text>
