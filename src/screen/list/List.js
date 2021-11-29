@@ -1,17 +1,54 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
-import {NavHeader} from '../../components';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Alert,
+} from 'react-native';
+import {AppInput, NavHeader} from '../../components';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
-import { back } from 'react-native/Libraries/Animated/Easing';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export class List extends React.Component {
   state = {
     data: [
+      {
+        name: 'Hamad',
+        fName: 'Javed',
+        phone: '03011636183',
+        age: '27',
+        img: require('../../assets/1.jpg'),
+      },
+      {
+        name: 'Ahmad',
+        fName: 'Aslam',
+        phone: '03098935144',
+        age: '27',
+        img: require('../../assets/2.jpg'),
+      },
+      {
+        name: 'Ali',
+        fName: 'Yonus',
+        phone: '03038594864',
+        age: '22',
+        img: require('../../assets/3.jpg'),
+      },
+      {
+        name: 'Usman',
+        fName: 'Javed',
+        phone: '03170490007',
+        age: '17',
+        img: require('../../assets/4.jpg'),
+      },
+    ],
+    filteredData: [
       {
         name: 'Hamad',
         fName: 'Javed',
@@ -108,6 +145,7 @@ export class List extends React.Component {
           alignItems: 'center',
           justifyContent: 'center',
           borderColor: 'red',
+          overflow: 'hidden',
         }}>
         <Image
           source={item.img}
@@ -119,11 +157,12 @@ export class List extends React.Component {
           }}
         />
       </View>
+
       <View
         style={{
           //backgroundColor: '#af3',
           height: '100%',
-          width: '80%',
+          width: '70%',
         }}>
         <View
           style={{
@@ -150,7 +189,7 @@ export class List extends React.Component {
           <View
             style={{
               height: '100%',
-              width: '50%',
+              width: '70%',
               //backgroundColor: 'orange',
               justifyContent: 'center',
             }}>
@@ -172,7 +211,7 @@ export class List extends React.Component {
           <View
             style={{
               height: '100%',
-              width: '50%',
+              width: '30%',
               //backgroundColor: 'orange',
               justifyContent: 'center',
               paddingLeft: h('2%'),
@@ -186,8 +225,8 @@ export class List extends React.Component {
           </View>
           <View
             style={{
-              height: '100%',
-              width: '50%',
+              height: '80%',
+              width: '100%',
               //backgroundColor: 'blue',
               justifyContent: 'center',
               paddingLeft: h('2%'),
@@ -201,8 +240,90 @@ export class List extends React.Component {
           </View>
         </View>
       </View>
+      <TouchableOpacity
+        onPress={() => {
+          Alert.alert('Alert....', 'Do really want to delete this item?', [
+            {
+              text: 'As Me Later',
+            },
+            {
+              text: 'No',
+            },
+            {
+              text: 'Yes',
+              onPress: () => this.remove(item),
+            },
+          ]);
+        }}
+        style={{
+          //backgroundColor: '#faf',
+          height: '100%',
+          width: '10%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Ionicons name={'trash'} size={h('3.5%')} color={'red'} />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
+  remove = item => {
+    let arr = [...this.state.filteredData];
+
+    var ind = arr.findIndex(element => element.name === item.name);
+    if (ind > -1) {
+      arr.splice(ind, 1);
+      this.setState({filteredData: arr});
+    }
+  };
+  add = () => {
+    //this is used to concat two arrays
+    //let arr=[...this.state.filteredData];
+    //const newItem=[
+    //{
+    //name: 'Test User',
+    //fName: 'User',
+    //phone: '12345678',
+    //age: '56',
+    //dob: '10-10-1997',
+    //img: require('../../assets/1.jpg'),
+    //},
+    //{
+    //name: 'Test User 2',
+    //fName: 'User 2',
+    //phone: '12345678',
+    //age: '56',
+    //dob: '10-10-1997',
+    //img: require('../../assets/1.jpg'),
+    //},
+    //];
+    //this.setState({filteredData: arr.concat(newItem)});
+    const newItem = {
+      name: 'Test User',
+      fName: 'User',
+      phone: '12345678',
+      age: '56',
+      dob: '10-10-1997',
+      img: require('../../assets/1.jpg'),
+    };
+    this.setState(
+      prevState => ({
+        filteredData: [...prevState.filteredData, newItem],
+      }),
+      () => {
+        console.warn('done');
+      },
+    );
+  };
+  searchFilterFunction = txt => {
+    const newData = this.state.data.filter(item => {
+      const itemData = `${item.name.toUpperCase()} ${item.fName.toUpperCase()} ${
+        item.phone
+      }`;
+      const searchTxt = txt.toUpperCase();
+      return itemData.indexOf(searchTxt) > -1;
+    });
+    this.setState({filteredData: newData});
+  };
   separator = () => (
     <View
       style={{
@@ -219,17 +340,31 @@ export class List extends React.Component {
         }}>
         <NavHeader
           title={'List'}
-          rightIc={'ios-arrow-forward'}
           leftIc={'ios-arrow-back'}
+          leftPressed={() => {
+            this.props.navigation.goBack();
+          }}
+          rightIc={'person'}
           rightPressed={() => {
-            this.setState({loggedIn: !this.state.loggedIn});
+            this.add();
           }}
         />
+        <AppInput
+          ic={'search'}
+          placeholder={'Search Here'}
+          placeholderTextColor={'black'}
+          color={'black'}
+          st={{
+            marginTop: h('1%'),
+          }}
+          onChangeText={txt => this.searchFilterFunction(txt)}
+        />
         <FlatList
+          //inverted
           style={{
             margin: h('1'),
           }}
-          data={this.state.data}
+          data={this.state.filteredData}
           renderItem={({item}) => this.renderDesign(item)}
           ItemSeparatorComponent={() => this.separator()}
           keyExtractor={(index, item) => item.toString()}

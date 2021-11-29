@@ -56,7 +56,9 @@ export class Dashboard extends React.Component {
             rightPressed={() => {
               console.warn('right');
             }}
+            custom
           />
+
           <View
             style={{
               height: '15%',
@@ -66,7 +68,7 @@ export class Dashboard extends React.Component {
             }}>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('BasicsTwo');
+                this.props.navigation.navigate('List');
                 //console.warn (this);
               }}
               style={{
@@ -82,10 +84,71 @@ export class Dashboard extends React.Component {
                 style={{
                   color: '#fff',
                 }}>
-                list
+                List
               </Text>
             </TouchableOpacity>
           </View>
+
+          <View
+            style={{
+              height: '15%',
+              //backgroundColor: '#f64',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('MultiList');
+                //console.warn (this);
+              }}
+              style={{
+                height: '90%',
+                width: '90%',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                }}>
+                MultiList
+              </Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View
+            style={{
+              height: '15%',
+              //backgroundColor: '#f64',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity
+            onPress={()=>{
+                this.props.navigation.navigate('ColumnList');
+                //console.warn (this);
+              }}
+              style={{
+                height: '90%',
+                width: '90%',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                }}>
+                ColumnList
+              </Text>
+            </TouchableOpacity>
+          </View>
+          
           <View
             style={{
               height: '15%',
@@ -100,7 +163,7 @@ export class Dashboard extends React.Component {
                   email: this.state.email,
                   password: this.state.password,
                 };
-                this.props.navigation.navigate('EditProfile', navProps);
+                this.props.navigation.navigate('EditProfile',navProps);
                 //console.warn (this);
               }}
               style={{
