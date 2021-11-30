@@ -34,6 +34,7 @@ export class Dashboard extends React.Component {
     }
   };
   render() {
+    const navigation = this.props.navigation;
     return (
       <ImageBackground
         source={require('../../assets/bg.jpg')}
@@ -51,7 +52,7 @@ export class Dashboard extends React.Component {
             title={'Dashboard'}
             rightIc={'ios-arrow-forward'}
             leftPressed={() => {
-              console.warn('left');
+              navigation.openDrawer();
             }}
             rightPressed={() => {
               console.warn('right');
@@ -118,7 +119,7 @@ export class Dashboard extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-          
+
           <View
             style={{
               height: '15%',
@@ -127,7 +128,7 @@ export class Dashboard extends React.Component {
               justifyContent: 'center',
             }}>
             <TouchableOpacity
-            onPress={()=>{
+              onPress={() => {
                 this.props.navigation.navigate('ColumnList');
                 //console.warn (this);
               }}
@@ -148,7 +149,7 @@ export class Dashboard extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-          
+
           <View
             style={{
               height: '15%',
@@ -163,7 +164,7 @@ export class Dashboard extends React.Component {
                   email: this.state.email,
                   password: this.state.password,
                 };
-                this.props.navigation.navigate('EditProfile',navProps);
+                this.props.navigation.navigate('EditProfile', navProps);
                 //console.warn (this);
               }}
               style={{

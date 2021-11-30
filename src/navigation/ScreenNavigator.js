@@ -12,6 +12,8 @@ import {List} from '../screen/list/List';
 import {DetailsScreen} from '../screen/list/DetailsScreen';
 import {ColumnList} from '../screen/list/ColumnList';
 import { MultiList } from '../screen/list';
+import { Settings } from '../screen/settings';
+import {DrawerNavigator} from '../navigation/DrawerNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,8 +22,13 @@ export const ScreenNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen
-          name="Dashboard"
-          component={Dashboard}
+          name="DrawerNavigator"
+          component={DrawerNavigator}
+          options={{headerShown: false}}
+        />
+      <Stack.Screen
+          name="Settings"
+          component={Settings}
           options={{headerShown: false}}
         />
       <Stack.Screen
