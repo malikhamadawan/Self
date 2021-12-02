@@ -35,10 +35,11 @@ export class NavHeader extends React.Component {
             justifyContent: 'center',
           }}>
           <Text
-          style={{
-            color: 'black',
-          }}
-          >{this.props.title}</Text>
+            style={{
+              color: 'white',
+            }}>
+            {this.props.title}
+          </Text>
         </View>
         <TouchableOpacity
           onPress={this.props.rightPressed}

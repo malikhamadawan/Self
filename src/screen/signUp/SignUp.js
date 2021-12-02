@@ -7,6 +7,7 @@ import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {AppBtn, AppInput, NavHeader} from '../../components';
+import AysncStorage from '@react-native-async-storage/async-storage';
 
 export class SignUp extends React.Component {
   state = {
@@ -47,7 +48,7 @@ export class SignUp extends React.Component {
     // }
     //===========
 
-    const navProps = {
+    const data = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
@@ -59,7 +60,9 @@ export class SignUp extends React.Component {
       ? alert('Email is required')
       : this.state.password.length < 8
       ? alert('Password must contain 8 characters')
-      : this.props.navigation.navigate('Dashboard', navProps);
+      : AysncStorage.setItem('userData', JSON.stringify(data), () => {
+          this.props.navigation.navigate('TabNavigator');
+        });
   };
 
   render() {

@@ -21,7 +21,7 @@ export class Settings extends React.Component {
           style={{
             height: h('8%'),
             width: '100%',
-           // backgroundColor: '#a21',
+            // backgroundColor: '#a21',
             alignItems: 'center',
             justifyContent: 'center',
             borderTopWidth: h('0.05%'),

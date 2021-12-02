@@ -45,7 +45,7 @@ export class Dashboard extends React.Component {
         <View
           style={{
             flex: 1,
-            backgroundColor: '#000',
+            //backgroundColor: '#000',
           }}>
           <NavHeader
             leftIc={'ios-list'}
