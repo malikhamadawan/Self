@@ -11,6 +11,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NavHeader} from '../../components/NavHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export class Dashboard extends React.Component {
   state = {
     name: '',
@@ -50,12 +51,14 @@ export class Dashboard extends React.Component {
           <NavHeader
             leftIc={'ios-list'}
             title={'Dashboard'}
-            rightIc={'ios-arrow-forward'}
+            rightIc={'exit-outline'}
             leftPressed={() => {
               navigation.openDrawer();
             }}
             rightPressed={() => {
-              console.warn('right');
+              AsyncStorage.removeItem('userData', () => {
+                this.props.navigation.replace('SignUp');
+              });
             }}
             custom
           />
