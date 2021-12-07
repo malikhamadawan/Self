@@ -4,7 +4,6 @@ import React from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
@@ -20,19 +19,17 @@ export class Dashboard extends React.Component {
     user: {},
   };
   componentDidMount = () => {
-    const navProps = this.props.route.params;
-    console.warn(navProps);
-    if (navProps !== undefined) {
-      this.setState({
-        user: navProps,
-        name: navProps.name,
-        email: navProps.email,
-        password: navProps.password,
-      });
-      //console.warn('Gift ha');
-    } else {
-      //console.warn('No Roti pani');
-    }
+    AsyncStorage.getItem('userData', (err, res) => {
+      if (!err && res !== null) {
+        const data = JSON.parse(res);
+        this.setState({
+          user: data,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        });
+      }
+    });
   };
   render() {
     const navigation = this.props.navigation;
@@ -51,10 +48,10 @@ export class Dashboard extends React.Component {
           <NavHeader
             leftIc={'ios-list'}
             title={'Dashboard'}
-            rightIc={'exit-outline'}
             leftPressed={() => {
               navigation.openDrawer();
             }}
+            rightIc={'exit-outline'}
             rightPressed={() => {
               AsyncStorage.removeItem('userData', () => {
                 this.props.navigation.replace('SignUp');
