@@ -5,20 +5,32 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {AppBtn} from '../../components/AppBtn';
 import {NavHeader} from '../../components/NavHeader';
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
 
-export class EditProfile extends React.Component{
+export class EditProfile extends React.Component {
   state = {
     name: '',
+    email: '',
     password: '',
-    user: {},
   };
 
   componentDidMount = () => {
     const navProps = this.props.route.params;
     this.setState({
-      user: navProps,
       name: navProps.name,
+      email: navProps.email,
       password: navProps.password,
+    });
+  };
+
+  updateUser = () => {
+    const data = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+    };
+    AsyncStorage.setItem('userData', JSON.stringify(data), () => {
+      this.props.navigation.replace('TabNavigator');
     });
   };
 
@@ -31,7 +43,7 @@ export class EditProfile extends React.Component{
         <View
           style={{
             flex: 1,
-             backgroundColor: '#aaf',
+            backgroundColor: '#aaf',
           }}>
           <NavHeader
             leftIc={'ios-arrow-back'}

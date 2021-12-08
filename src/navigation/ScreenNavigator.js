@@ -14,6 +14,7 @@ import { MultiList } from '../screen/list';
 import { Settings } from '../screen/settings';
 import { TabNavigator } from './TabNavigator';
 import { Splash } from '../screen/splash';
+import {ImgPick}from '../screen/imgPick/ImgPick';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,11 @@ export const ScreenNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen
+          name="ImgPick"
+          component={ImgPick}
+          options={{headerShown: false}}
+        />
       <Stack.Screen
           name="Splash"
           component={Splash}
