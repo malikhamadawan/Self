@@ -90,7 +90,7 @@ export class EditProfile extends React.Component {
                 marginTop: 10,
               }}
               placeholder={'Email'}
-              value={this.state.user.email}
+              value={this.state.email}
               editable={false}
               placeholderTextColor={'black'}
             />

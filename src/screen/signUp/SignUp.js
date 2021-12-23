@@ -20,10 +20,13 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
+import validator from 'email-validator';
+import {baseUrl, axiosInstance} from '../../services/Api';
 export class SignUp extends React.Component {
   state = {
     name: '',
     email: '',
+    phone: '',
     password: '',
     secureTxt: true,
     modalVisible: false,
@@ -62,30 +65,39 @@ export class SignUp extends React.Component {
     // }
     //===========
 
+    const res = validator.validate(this.state.email);
+
+    this.state.name === ''
+      ? alert('Name is required')
+      : res === false
+      ? alert('Invalid Email')
+      : this.state.password.length < 8
+      ? alert('Password must contain 8 characters')
+      : this.state.phone.length < 11
+      ? alert('Invalid Phone number')
+      : this.signUp();
+  };
+
+  signUp = () => {
     const data = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
+      phone: this.state.phone,
     };
 
-    this.state.name === ''
-      ? alert('Name is required')
-      : this.state.email === ''
-      ? alert('Email is required')
-      : this.state.password.length < 8
-      ? alert('Password must contain 8 characters')
-      : AysncStorage.setItem('userData', JSON.stringify(data), () => {
-          Alert.alert(
-            'Alert...',
-            'Your account have been created successfully please sign in',
-            [
-              {
-                text: 'No',
-              },
-              {text: 'yes', onPress: () => this.setState({modalVisible: true})},
-            ],
-          );
-        });
+    axiosInstance
+      .post(baseUrl + 'users/signUp', data)
+      .then(res => {
+        if (res.data.status === '200') {
+          alert(res.data.msg);
+        } else {
+          alert(res.data.msg);
+        }
+      })
+      .catch(err => {
+        console.warn('2' + err);
+      });
   };
   signIn = () => {
     AysncStorage.getItem('userData', (err, res) => {
@@ -151,7 +163,7 @@ export class SignUp extends React.Component {
           <View
             style={{
               // backgroundColor: '#1af',
-              height: 350,
+              height: 420,
               padding: 15,
             }}>
             <AppInput
@@ -168,6 +180,16 @@ export class SignUp extends React.Component {
               placeholderTextColor={'black'}
               color={'#000'}
               onChangeText={txt => this.setState({email: txt})}
+              st={{
+                marginTop: 10,
+              }}
+            />
+                <AppInput
+              ic={'ios-call'}
+              placeholder={'Phone'}
+              placeholderTextColor={'black'}
+              color={'#000'}
+              onChangeText={txt => this.setState({phone: txt})}
               st={{
                 marginTop: 10,
                 marginBottom: 10,

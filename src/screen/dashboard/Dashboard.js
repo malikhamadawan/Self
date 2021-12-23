@@ -1,16 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NavHeader} from '../../components/NavHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
 export class Dashboard extends React.Component {
   state = {
     name: '',
@@ -30,6 +26,13 @@ export class Dashboard extends React.Component {
         });
       }
     });
+  };
+  deviceData = () => {
+    // let res = DeviceInfo.getBundleId();
+    // let res = DeviceInfo.getBuildNumber();
+    // let res = DeviceInfo.getDeviceId();
+    let res = DeviceInfo.getVersion();
+    console.warn(res);
   };
   render() {
     const navigation = this.props.navigation;
@@ -89,18 +92,16 @@ export class Dashboard extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-
           <View
             style={{
               height: '15%',
-              //backgroundColor: '#f64',
+              // backgroundColor: '#a4a',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('MultiList');
-                //console.warn (this);
+                navigation.navigate('ImgPick');
               }}
               style={{
                 height: '90%',
@@ -115,7 +116,7 @@ export class Dashboard extends React.Component {
                 style={{
                   color: '#fff',
                 }}>
-                MultiList
+                Image Picker
               </Text>
             </TouchableOpacity>
           </View>
@@ -181,6 +182,62 @@ export class Dashboard extends React.Component {
                   color: '#fff',
                 }}>
                 EditProfile
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              height: '15%',
+              // backgroundColor: '#a4a',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('DateTimePick');
+              }}
+              style={{
+                height: '90%',
+                width: '90%',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                }}>
+                Date Time Picker
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              height: '15%',
+              // backgroundColor: '#a4a',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('LearnCalendar');
+              }}
+              style={{
+                height: '90%',
+                width: '90%',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: '#fff',
+                }}>
+                Calendar
               </Text>
             </TouchableOpacity>
           </View>
