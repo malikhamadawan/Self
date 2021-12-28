@@ -6,11 +6,11 @@ import {
   heightPercentageToDP as h,
   widthPercentageToDP as w,
 } from 'react-native-responsive-screen';
-import AysncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export class Splash extends React.Component {
   componentDidMount = () => {
     setTimeout(() => {
-      AysncStorage.getItem('userData', (err, res) => {
+      AsyncStorage.getItem('userData', (err, res) => {
         if (!err && res !== null) {
           this.props.navigation.replace('TabNavigator');
         } else {

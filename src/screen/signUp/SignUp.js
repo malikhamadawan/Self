@@ -1,4 +1,3 @@
-/* eslint-disable eslint-comments/no-unused-disable */
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
@@ -15,7 +14,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {AppBtn, AppInput, NavHeader} from '../../components';
-import AysncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -30,7 +29,7 @@ export class SignUp extends React.Component {
     password: '',
     secureTxt: true,
     modalVisible: false,
-    inEmail: '',
+    inPhone: '',
     inPassword: '',
   };
 
@@ -76,6 +75,18 @@ export class SignUp extends React.Component {
       : this.state.phone.length < 11
       ? alert('Invalid Phone number')
       : this.signUp();
+    // AsyncStorage.setItem('userData', JSON.stringify(data), () => {
+    //   Alert.alert(
+    //     'Alert....',
+    //     'Your account have been created successfully please Sign in',
+    //     [
+    //       {
+    //         text: 'No',
+    //       },
+    //       {text: 'Yes', onPress: () => this.setState({modalVisible: true})},
+    //     ],
+    //   );
+    // });
   };
 
   signUp = () => {
@@ -89,10 +100,11 @@ export class SignUp extends React.Component {
     axiosInstance
       .post(baseUrl + 'users/signUp', data)
       .then(res => {
-        if (res.data.status === '200') {
-          alert(res.data.msg);
+        const data = res.data;
+        if (data.status === '200') {
+          alert(data.msg);
         } else {
-          alert(res.data.msg);
+          alert(data.msg);
         }
       })
       .catch(err => {
@@ -100,22 +112,38 @@ export class SignUp extends React.Component {
       });
   };
   signIn = () => {
-    AysncStorage.getItem('userData', (err, res) => {
-      if (!err && res !== null) {
-        const data = JSON.parse(res);
-        if (data.email === this.state.inEmail) {
-          if (data.password === this.state.inPassword) {
-            this.props.navigation.replace('TabNavigator');
-          } else {
-            alert('Incorrect password');
-          }
-        } else {
-          alert('Invalid email');
-        }
+    if (this.state.inPhone.length < 11) {
+      alert('Invalid Phone number');
+    } else {
+      if (this.state.inPassword.length < 8) {
+        alert('Password must contain 8 characters');
+      } else {
+        const params = {
+          phone: this.state.inPhone,
+          password: this.state.inPassword,
+        };
+        axiosInstance
+          .post(baseUrl + 'users/signIn', params)
+          .then(res => {
+            const data = res.data;
+            if (data.status === '200') {
+              AsyncStorage.setItem(
+                'userData',
+                JSON.stringify(data.data),
+                () => {
+                  this.props.navigation.replace('TabNavigator');
+                },
+              );
+            } else {
+              alert(data.msg);
+            }
+          })
+          .catch(err => {
+            console.warn(err.message);
+          });
       }
-    });
+    }
   };
-
   render() {
     return (
       <View
@@ -184,7 +212,7 @@ export class SignUp extends React.Component {
                 marginTop: 10,
               }}
             />
-                <AppInput
+            <AppInput
               ic={'ios-call'}
               placeholder={'Phone'}
               placeholderTextColor={'black'}
@@ -353,15 +381,16 @@ export class SignUp extends React.Component {
                   padding: h('2.5%'),
                 }}>
                 <AppInput
-                  ic={'ios-mail'}
-                  placeholder={'Email'}
+                  ic={'ios-call'}
+                  placeholder={'Phone'}
                   placeholderTextColor={'black'}
                   color={'#000'}
-                  onChangeText={txt => this.setState({inEmail: txt})}
+                  onChangeText={txt => this.setState({inPhone: txt})}
                   st={{
                     marginTop: 10,
                     marginBottom: 10,
                   }}
+                  maxLength={11}
                 />
 
                 <View
